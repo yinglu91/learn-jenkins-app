@@ -29,7 +29,11 @@ pipeline {
                 }
             }
             steps {
-                echo "Running tests..."
+                sh '''
+                    test -f build/index.html || exit 1
+                    test -f build/static/js/main.*.js || exit 2
+                    npm run test
+                '''
             }
         }
     }
